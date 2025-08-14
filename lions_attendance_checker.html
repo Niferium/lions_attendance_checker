@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quezon City Bahaghari Executive Lions Club - Attendance</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            max-width: 500px;
+            width: 100%;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+            padding: 30px;
+            text-align: center;
+            color: #1e3c72;
+        }
+
+        .logo {
+            width: 80px;
+            height: 80px;
+            background: white;
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 24px;
+            color: #1e3c72;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .header h1 {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .header p {
+            font-size: 14px;
+            opacity: 0.8;
+        }
+
+        .form-section {
+            padding: 40px 30px;
+        }
+
+        .input-group {
+            margin-bottom: 25px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+            font-size: 14px;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e1e5e9;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background: #f8f9fa;
+        }
+
+        .input-group input:focus {
+            outline: none;
+            border-color: #FFD700;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.1);
+        }
+
+        .check-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 20px;
+        }
+
+        .check-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(30, 60, 114, 0.3);
+        }
+
+        .check-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .result {
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .result.success {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            color: white;
+        }
+
+        .result.error {
+            background: linear-gradient(135deg, #dc3545 0%, #fd7e14 100%);
+            color: white;
+        }
+
+        .result.info {
+            background: linear-gradient(135deg, #17a2b8 0%, #6f42c1 100%);
+            color: white;
+        }
+
+        .member-info {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            border-left: 5px solid #FFD700;
+        }
+
+        .member-info h3 {
+            color: #1e3c72;
+            margin-bottom: 10px;
+        }
+
+        .member-info p {
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .mark-present-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 15px;
+        }
+
+        .mark-present-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(40, 167, 69, 0.3);
+        }
+
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .setup-section {
+            padding: 20px 30px;
+            border-top: 1px solid #eee;
+            background: #f8f9fa;
+        }
+
+        .setup-section h3 {
+            color: #1e3c72;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+
+        .setup-section p {
+            color: #666;
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .setup-section input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .setup-btn {
+            padding: 10px 20px;
+            background: #FFD700;
+            color: #1e3c72;
+            border: none;
+            border-radius: 5px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">LC</div>
+            <h1>Quezon City Bahaghari Executive Lions Club</h1>
+            <p>Event Attendance Verification</p>
+        </div>
+
+        <div class="form-section">
+            <div class="input-group">
+                <label for="searchInput">Enter Name or ID Number</label>
+                <input type="text" id="searchInput" placeholder="e.g., John Doe or LION-0001">
+            </div>
+            <button class="check-btn" onclick="checkAttendance()">
+                <span id="btnText">Check Attendance</span>
+                <span id="loading" class="loading" style="display: none;"></span>
+            </button>
+            <div id="result"></div>
+        </div>
+
+        <!-- <div class="setup-section">
+            <h3>Google Sheets Setup</h3>
+            <p>Enter your Google Sheets URLs to connect the attendance system:</p>
+            <input type="text" id="membersSheetUrl" placeholder="Members List Sheet URL">
+            <input type="text" id="attendanceSheetUrl" placeholder="Attendance Record Sheet URL">
+            <button class="setup-btn" onclick="setupSheets()">Configure Sheets</button>
+        </div> -->
+    </div>
+
+    <script>
+        // Sample data for demonstration - replace with actual Google Sheets integration
+        let membersData = [
+            { id: 'LION-0001', name: 'John Doe', email: 'john.doe@email.com', status: 'Active' },
+            { id: 'LION-0002', name: 'Jane Smith', email: 'jane.smith@email.com', status: 'Active' },
+            { id: 'LION-0125', name: 'Robert Johnson', email: 'robert.j@email.com', status: 'Active' },
+            { id: 'LION-0256', name: 'Maria Garcia', email: 'maria.garcia@email.com', status: 'Active' },
+            { id: 'LION-1001', name: 'David Wilson', email: 'david.wilson@email.com', status: 'Active' }
+        ];
+
+        let attendanceData = [];
+        let currentMember = null;
+
+        function submitName(nameValue) {
+
+            if (!nameValue) {
+                alert("Please enter a name or code.");
+                return;
+            }
+
+            fetch("https://script.google.com/macros/s/AKfycbyxKV7MnrBRn5bojBJm2T6lrvi1KZMxQvSnHoKXH9UpZCAR-6a6RWHI1_X1eU3d2qhs3g/exec", {
+                method: "POST",
+                mode: "no-cors", // Google Apps Script ignores CORS
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ name: nameValue })
+            })
+            .then(() => {
+                alert("Attendance recorded!3");
+                document.getElementById("nameInput").value = "";
+            })
+            .catch(err => {
+                console.error(err);
+                alert("Failed to record attendance.2");
+            });
+
+        }
+        function setupSheets() {
+            const membersUrl = document.getElementById('membersSheetUrl').value;
+            const attendanceUrl = document.getElementById('attendanceSheetUrl').value;
+            
+            if (membersUrl && attendanceUrl) {
+                // In a real implementation, you would:
+                // 1. Extract the sheet ID from the URLs
+                // 2. Set up Google Sheets API integration
+                // 3. Fetch data from the sheets
+                showResult('Google Sheets configured successfully! Note: This demo uses sample data.', 'info');
+            } else {
+                showResult('Please enter both sheet URLs', 'error');
+            }
+        }
+
+        function validateLionId(id) {
+            const pattern = /^LION-\d{4}$/;
+            return pattern.test(id);
+        }
+
+        function searchMember(query) {
+            const searchTerm = query.toLowerCase().trim();
+            
+            // Check if it's an ID format
+            if (searchTerm.startsWith('lion-')) {
+                return membersData.find(member => 
+                    member.id.toLowerCase() === searchTerm
+                );
+            }
+            
+            // Search by name (first, last, or full name)
+            return membersData.find(member => {
+                const fullName = member.name.toLowerCase();
+                const nameParts = fullName.split(' ');
+                
+                // Check full name match
+                if (fullName.includes(searchTerm)) return true;
+                
+                // Check individual name parts
+                return nameParts.some(part => 
+                    part.includes(searchTerm) || searchTerm.includes(part)
+                );
+            });
+        }
+
+        function checkAttendance() {
+            const query = document.getElementById('searchInput').value.trim();
+            const btnText = document.getElementById('btnText');
+            const loading = document.getElementById('loading');
+            const checkBtn = document.querySelector('.check-btn');
+
+            
+            if (!query) {
+                showResult('Please enter a name or ID number', 'error');
+                return;
+            }
+
+            submitName(query)
+
+            // Show loading state
+            btnText.style.display = 'none';
+            loading.style.display = 'inline-block';
+            checkBtn.disabled = true;
+
+            // Simulate API call delay
+            setTimeout(() => {
+                const member = searchMember(query);
+                
+                btnText.style.display = 'inline-block';
+                loading.style.display = 'none';
+                checkBtn.disabled = false;
+
+                if (member) {
+                    currentMember = member;
+                    displayMemberInfo(member);
+                } else {
+                    showResult('Member not found. Please check the name or ID and try again.', 'error');
+                    currentMember = null;
+                }
+            }, 1000);
+        }
+
+        function displayMemberInfo(member) {
+            const isAlreadyPresent = attendanceData.some(record => record.id === member.id);
+            
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = `
+                <div class="member-info">
+                    <h3>Member Found!</h3>
+                    <p><strong>Name:</strong> ${member.name}</p>
+                    <p><strong>ID:</strong> ${member.id}</p>
+                    <p><strong>Email:</strong> ${member.email}</p>
+                    <p><strong>Status:</strong> ${member.status}</p>
+                    ${isAlreadyPresent ? 
+                        '<p style="color: #28a745; font-weight: bold;">✓ Already marked as present</p>' :
+                        '<button class="mark-present-btn" onclick="markPresent()">Mark as Present</button>'
+                    }
+                </div>
+            `;
+        }
+
+        function markPresent() {
+            if (!currentMember) return;
+            
+            const timestamp = new Date().toLocaleString();
+            const attendanceRecord = {
+                ...currentMember,
+                markedPresentAt: timestamp,
+                venue: 'Present'
+            };
+            
+            attendanceData.push(attendanceRecord);
+            
+            // In a real implementation, this would write to Google Sheets
+            console.log('Attendance marked:', attendanceRecord);
+            
+            showResult(`${currentMember.name} has been successfully marked as present!`, 'success');
+            
+            // Refresh the display to show updated status
+            displayMemberInfo(currentMember);
+            
+            // Clear the input
+            document.getElementById('searchInput').value = '';
+        }
+
+        function showResult(message, type) {
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = `<div class="result ${type}">${message}</div>`;
+        }
+
+        // Add enter key functionality
+        document.getElementById('searchInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                checkAttendance();
+            }
+        });
+
+        // Instructions for Google Sheets integration
+        console.log(`
+            To integrate with Google Sheets:
+            
+            1. Set up Google Sheets API credentials
+            2. Create two sheets:
+               - Members sheet with columns: ID, Name, Email, Status
+               - Attendance sheet with columns: ID, Name, Email, Status, MarkedPresentAt, Venue
+            
+            3. Replace the sample data with actual API calls to:
+               - Fetch members data from the first sheet
+               - Write attendance records to the second sheet
+            
+            4. The ID validation ensures format LION-0001 to LION-9999
+            5. Name search supports partial matching for flexibility
+        `);
+
+</script>
+    </script>
+</body>
+</html>
