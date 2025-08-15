@@ -267,11 +267,14 @@
     <script>
         // Sample data for demonstration - replace with actual Google Sheets integration
         let membersData = [
-            { id: 'LION-0001', name: 'John Doe', email: 'john.doe@email.com', status: 'Active' },
-            { id: 'LION-0002', name: 'Jane Smith', email: 'jane.smith@email.com', status: 'Active' },
-            { id: 'LION-0125', name: 'Robert Johnson', email: 'robert.j@email.com', status: 'Active' },
-            { id: 'LION-0256', name: 'Maria Garcia', email: 'maria.garcia@email.com', status: 'Active' },
-            { id: 'LION-1001', name: 'David Wilson', email: 'david.wilson@email.com', status: 'Active' }
+            { id: 'LION-0003', name: 'Pearl Hazelle Godes' },
+            { id: 'LION-0001', name: 'Jan Michelle D. Enrile' },
+            { id: 'LION-0002', name: 'Rosalyn Azul-Condat' },
+            { id: 'LION-0006', name: 'Sylvester Lumbao' },
+            { id: 'LION-0007', name: 'Ritchie Godes' },
+            { id: 'LION-0004', name: 'Edith  Del Rosario' },
+            { id: 'LION-0005', name: 'Bob Del Rosario' },
+            { id: 'LION-0008', name: 'Harley Davidson R. Tobias' }
         ];
 
         let attendanceData = [];
@@ -291,12 +294,12 @@
                 body: JSON.stringify({ name: nameValue })
             })
             .then(() => {
-                alert("Attendance recorded!3");
+                //alert("Attendance recorded!3");
                 document.getElementById("nameInput").value = "";
             })
             .catch(err => {
                 console.error(err);
-                alert("Failed to record attendance.2");
+                //alert("Failed to record attendance.2");
             });
 
         }
@@ -339,9 +342,10 @@
                 if (fullName.includes(searchTerm)) return true;
                 
                 // Check individual name parts
-                return nameParts.some(part => 
-                    part.includes(searchTerm) || searchTerm.includes(part)
-                );
+                // return nameParts.some(part => 
+                //     part.includes(searchTerm) || searchTerm.includes(part)
+                // );
+                return nameParts.some(part => part.includes(searchTerm));
             });
         }
 
@@ -386,17 +390,24 @@
             const isAlreadyPresent = attendanceData.some(record => record.id === member.id);
             
             const resultDiv = document.getElementById('result');
+            // resultDiv.innerHTML = `
+            //     <div class="member-info">
+            //         <h3>Member Found!</h3>
+            //         <p><strong>Name:</strong> ${member.name}</p>
+            //         <p><strong>ID:</strong> ${member.id}</p>
+            //         <p><strong>Email:</strong> ${member.email}</p>
+            //         <p><strong>Status:</strong> ${member.status}</p>
+            //         ${isAlreadyPresent ? 
+            //             '<p style="color: #28a745; font-weight: bold;">✓ Already marked as present</p>' :
+            //             '<button class="mark-present-btn" onclick="markPresent()">Mark as Present</button>'
+            //         }
+            //     </div>
+            // `;
             resultDiv.innerHTML = `
                 <div class="member-info">
                     <h3>Member Found!</h3>
                     <p><strong>Name:</strong> ${member.name}</p>
                     <p><strong>ID:</strong> ${member.id}</p>
-                    <p><strong>Email:</strong> ${member.email}</p>
-                    <p><strong>Status:</strong> ${member.status}</p>
-                    ${isAlreadyPresent ? 
-                        '<p style="color: #28a745; font-weight: bold;">✓ Already marked as present</p>' :
-                        '<button class="mark-present-btn" onclick="markPresent()">Mark as Present</button>'
-                    }
                 </div>
             `;
         }
